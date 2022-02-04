@@ -1,0 +1,23 @@
+- name: Running mysql 
+  hosts: rocky
+  remote_user: root
+
+  vars:
+    db_volume: db_data
+
+  tasks:
+
+  - name: launch mysql container
+    docker_container:
+      name: mysql
+      image: mysql:latest
+      volumes:
+        - "{{db_volume}}:/var/lib/mysql"
+      restart: true
+      env:
+        MYSQL_ROOT_PASSWORD: password123
+        MYSQL_DATABASE: test
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: password123
+      ports:
+        - "33306:3306"
