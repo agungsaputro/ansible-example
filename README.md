@@ -17,6 +17,11 @@ install docker-sdk in server host
 ```
 pip3 install docker
 ```
+ssh-keygen & copy ssh to targets server
+```
+ssh keygent -t
+ssh-copy-id -i /home/{users}/.ssh/id_rsa username_server@ip_server
+```
 edit /etc/ansible/hosts
 ```
 #name grup server
