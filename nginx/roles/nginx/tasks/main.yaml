@@ -25,7 +25,7 @@
       server{
           listen 80;
           location / {
-              proxy_pass http://ip:port;
+              proxy_pass http://'{{ lookup("env", "IP") }}':'{{ lookup("env", "PORT") }}';
               proxy_set_header Authorization "";
               proxy_read_timeout 90s;
           }
