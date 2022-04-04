@@ -34,7 +34,7 @@
 - name: Link Nginx reserve proxy
   become: yes
   command:
-    cmd: ln -s /etc/nginx/sites-available/proxy.conf /etc/nginx/sites-enabled/proxy.conf
+    cmd: ln -sv /etc/nginx/sites-enabled/proxy.conf /etc/nginx/sites-enabled/service.conf
 
 - name: Restart Nginx
   become: yes
