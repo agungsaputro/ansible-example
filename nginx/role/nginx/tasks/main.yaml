@@ -1,0 +1,44 @@
+---
+- name: Install Nginx apt-get
+  become: yes
+  apt:
+    name: nginx
+    state: present
+
+- name: Disable Nginx default
+  become: yes
+  command:
+    cmd: unlink /etc/nginx/sites-enabled/default
+
+- name: Nginx reserve proxy
+  become: yes
+  file:
+    path: /etc/nginx/sites-enabled/proxy.conf
+    state: touch
+
+- name: Amend Nginx conf
+  become: yes
+  blockinfile:
+    path: /etc/nginx/sites-enabled/proxy.conf
+    marker: ""
+    block: |
+      server{
+          listen 80;
+          location / {
+              proxy_pass http://ip:port;
+              proxy_set_header Authorization "";
+              proxy_read_timeout 90s;
+          }
+      }
+
+- name: Link Nginx reserve proxy
+  become: yes
+  command:
+    cmd: ln -s /etc/nginx/sites-available/proxy.conf /etc/nginx/sites-enabled/proxy.conf
+
+- name: Restart Nginx
+  become: yes
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes

@@ -1,0 +1,13 @@
+---
+
+- hosts: host
+  gather_facts: yes
+  roles:
+    - nginx
+  
+  pre_tasks:
+    - name: update apt
+      become: yes
+      apt:
+        update_cache=yes
+        cache_valid_time=3600
